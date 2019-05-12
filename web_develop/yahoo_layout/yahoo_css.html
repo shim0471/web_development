@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<!-- CSS in practice: Yahoo main page layout -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Yahoo Hompage</title>
+    <style>
+        body{
+            margin: 0;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        #header{
+            border: 1px dashed red;
+            width: 99%;
+            margin: 0;
+        }
+
+        /* Header navigation */
+
+        #header_nav{
+            width: 100%;
+            color: aliceblue;
+            overflow: hidden;
+            background-color: #2d1152;
+        }
+
+        #header_nav ul li{
+            list-style: none;
+            float: left;
+            font-size: 0.9em;
+            margin-right: 20px;
+        }
+
+        #header_nav .firefox{
+            float: right;
+            margin: 0 10px 0 0;
+        }
+
+        #header_nav .firefox a{
+            color: aliceblue;
+        }
+
+        /* Header content */
+
+        #header_info{
+            width: 1000px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        #header_info div{
+            margin-top: 10px;
+            float: left;
+        }
+
+        #header_info .search input{
+            width: 400px;
+            font-size: 20px;
+            border: 1px solid#3488d9;
+            margin-top: 6px;
+            padding: 5px;
+        }
+
+        #header_info .btn_search{
+            width: 124px;
+            height: 38px;
+            background: url(/images/search_btn.png) no-repeat 0 0;
+            border: 0;
+        }
+
+        #header_info .service{
+            float: right;
+        }
+
+        #header_info .service ul li{
+            list-style: none;
+            float: left;
+            margin-right: 15px;
+        }
+
+        /* Content part */
+
+        #content{
+            border: 1px dashed green;
+            width: 1000px;
+            margin: 0 auto;
+            margin-top: 35px;
+            overflow: hidden;
+        }
+
+        #main_nav{
+            float: left;
+            width: 155px;
+            border: 1px dashed brown;
+        }
+
+        #nav_list ul li{
+            list-style: none;
+            line-height: 35px;
+        }
+
+        #main{
+            width: 600px;
+            margin-left: 5px;
+            float: left;
+        }
+
+        #main div{
+            border: 1px solid #cccccc;
+        }
+
+        #main div:nth-child(1){
+            width: 590px;
+            height: 300px;
+        }
+
+        #main div:nth-child(2){
+            width: 590px;
+            height: 150px;
+            margin-top: 3px;
+        }
+
+        #main .middle_banner{
+            width: 590px;
+            height: 50px;
+            background-color: #500095;
+            margin-top: 5px;
+        }
+
+        #main div:nth-child(4){
+            width: 590px;
+            height: 120px;
+            margin-top: 3px;
+        }
+
+        #main div:nth-child(5){
+            width: 590px;
+            height: 120px;
+            margin-top: 3px;
+        }
+
+        .middle_banner ul{
+            margin: 8px 0 0 0;
+        }
+
+        .middle_banner ul li{
+            list-style: none;
+            color: aliceblue;
+            font-size: 1.2em;
+            margin-right: 23px;
+            float: left;
+        }
+
+        #main_banner{
+            width: 230px;
+            margin-left: 5px;
+            float: left;
+        }
+
+        #main_banner div{
+            border: 1px solid #cccccc;
+        }
+
+        #main_banner div:nth-child(1){
+            width: 230px;
+            height: 100px;
+            margin-top: 5px;
+        }
+
+        #main_banner div:nth-child(2){
+            width: 230px;
+            height: 100px;
+            margin-top: 5px;
+        }
+
+        #main_banner div:nth-child(3){
+            width: 230px;
+            height: 200px;
+            margin-top: 5px;
+        }
+
+        #main_banner div:nth-child(4){
+            width: 230px;
+            height: 200px;
+            margin-top: 5px;
+        }
+
+        #main_banner div:nth-child(5){
+            width: 230px;
+            height: 200px;
+            margin-top: 5px;
+        }
+
+        #footer{
+            width: 1000px;
+            height: 100px;
+            border: 1px solid #cccccc;
+            text-align: center;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <div id="header_nav">
+            <div>
+                <ul>
+                    <li>Home</li>
+                    <li>Mail</li>
+                    <li>Answers</li>
+                    <li>Groups</li>
+                    <li>Flicker</li>
+                    <li>Tumblr</li>
+                    <li>Games</li>
+                    <li>Live</li>
+                    <li>Screen</li>
+                    <li>Mobile</li>
+                    <li>More</li>
+                </ul>
+            </div>
+            <div class="firefox">
+                <a href="">Upgrade to the new FireFox</a>
+            </div>
+        </div>
+        <div id="header_info">
+            <div class="logo">
+                <img src="images/yahoo_logo.png" alt="No image!">
+            </div>
+            <div class="search">
+                <input type="text">
+                <button type="submit" class="btn_search"><span class="txt_sw">Search web</span></button>
+            </div>
+            <div class="service">
+                <ul>
+                    <li>My Yahoo</li>
+                    <li>Sing In</li>
+                    <li>Mail</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="content">
+        <div id="main_nav">
+            <div id="nav_list">
+                <ul>
+                    <li>Mail</li>
+                    <li>News</li>
+                    <li>Sports</li>
+                    <li>Finance</li>
+                    <li>Weather</li>
+                    <li>Autos</li>
+                    <li>Screen</li>
+                    <li>Dating</li>
+                    <li>Shopping</li>
+                    <li>Makers</li>
+                    <li>Parenting</li>
+                    <li>Health</li>
+                    <li>Style</li>
+                    <li>Beauty</li>
+                    <li>Politice</li>
+                    <li>Movie</li>
+                    <li>Travel</li>
+                    <li>Tech</li>
+                    <li>TV</li>
+                </ul>
+            </div>
+        </div>
+        <div id="main">
+            <div>main big banner</div>
+            <div>main slide banner</div>
+            <div class="middle_banner">
+                <ul>
+                    <li>All Stories</li>
+                    <li>News</li>
+                    <li>Entertainment</li>
+                    <li>Sports</li>
+                    <li>business</li>
+                    <li>More</li>
+                </ul>
+            </div>
+            <div>main topic</div>
+            <div>main topic</div>
+        </div>
+        <div id="main_banner">
+            <div>hit search word</div>
+            <div>ad1</div>
+            <div>ad2</div>
+            <div>ad3</div>
+            <div>ad4</div>
+        </div>
+    </div>
+    <div id="footer">
+        <p>Yahoo.com</p>
+    </div>
+</body>
+</html>
