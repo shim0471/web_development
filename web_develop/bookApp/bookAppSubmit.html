@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<!-- Description: The portfolio Application
+     Programmer: shim hyungoo
+     Date : June 5, 2019
+     Version: 2.0
+     Copyright 2019
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BookApp</title>
+
+    <!-- jQuery Mobile, jQuery library files -->
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+    <!-- Define javascript file -->
+    <script src="dataHandler.js"></script>
+    <script>
+        $(document).ready(function(){
+            // Connecting Database
+            openDB();
+            createTable();
+            // Call insert function
+            $('#submit1').click(function(){
+                insertBook();
+            });
+            // Call delete function
+            $('#submit3').click(function(){
+                deleteBook();
+            });
+            // Call update function
+            $('#submit2').click(function(){
+                updateBook();
+            });
+            // Call data transaction fuction
+            $('#search2').click(function(){
+                var name = $('#sBookName2').val();
+                selectBook2(name);
+            });
+            $('#search3').click(function(){
+                var name = $('#sBookName3').val();
+                selectBook3(name);
+            });
+            $('#search4').click(function(){
+                var name = $('#sBookName4').val();
+                selectBook4(name);
+            });
+            // Call Searching All Book function
+            $('#first').click(function(){ // First is |<
+                position = 'first';
+                searchAllBook();
+            });
+            $('#prev').click(function(){  // prev is <
+                position = 'prev';
+                searchAllBook();
+            });
+            $('#next').click(function(){  // next is >
+                position = 'next';
+                searchAllBook();
+            });
+            $('#last').click(function(){  // last is  >|
+                position = 'last';
+                searchAllBook();
+            });
+            // Reset Book's type in Adding page
+            $('#cancel1').click(function(){
+                $('#bookType1').val('Undecied').attr('selected', 'selected');
+                $('#bookType1').selectmenu('refresh');
+            });
+            // Reset Book's type in Update page
+            $('#cancel2').click(function(){
+                $('#bookType1').val('Undecied').attr('selected', 'selected');
+                $('#bookType1').selectmenu('refresh');
+            });
+        });
+    </script>
+    <style>
+        img{
+            padding: 10px; 
+            margin: 10px 50px;
+        }
+        .gap{
+            padding-top: 15px;
+            padding-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Page -->
+    <div data-role="page" id="page0">
+        <div data-role="header" data-position="fixed" data-theme="b">
+            <h1>Information of Books</h1>
+            <a href="#" data-icon="home" data-iconpos="notext" class="ui-btn-right">HOME</a>
+        </div>
+        
+        <div data-role="content">
+            <!-- <img src="http://shim0471.ohseon.com/code2/jquery/images/book.png" style="width:20%;  margin-left: 43%; border-radius: 3%;"alt=""> -->
+            <img src="http://shim0471.ohseon.com/code2/jquery/images/book2.jpg" alt="">
+            <ul data-role="listview" data-inset="true">
+                <li><a href="#page1">Adding The Book info</a></li>
+                <li><a href="#page2">Update Books</a></li>
+                <li><a href="#page3">Delete The Book</a></li>
+                <li><a href="#page4">Searching</a></li>
+            </ul>
+        </div>
+
+        <div data-role="footer">
+            <h4>Book & Book Library</h4>
+        </div>
+    </div>
+
+    <!-- Adding Page -->
+    <div data-role="page" id="page1">
+        <div data-role="header" data-postion="fixed" data-theme="b">
+            <a href="#" data-icon="back" data-rel="back" data-direction="reverse">Back</a>
+            <a href="#page0" data-icon="home" data-iconpos="notext">HOME</a>
+                <h1>Book Library</h1>
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#page1">Adding</a></li>
+                        <li><a href="#page2">Update</a></li>
+                        <li><a href="#page3">Delete</a></li>
+                        <li><a href="#page4">Searching</a></li>
+                    </ul>
+                </div>
+        </div>
+
+        <div data-role="content" >
+            <form  name='form1'>
+                <h3>Addign The Book's content</h3>
+                <div class="ui-body ui-body-a gap">
+                    <label for="bookType1" class="select">Genre</label>
+                        <select name="bookType1" id="bookGenre1" data-native-menu="false" data-mini="true" data-inline="true">
+                            <!-- These is roll button -->
+                            <option value="Undecided">Undecided</option>
+                            <option value="Economy">Economy</option>
+                            <option value="current affairs ">Current affairs</option>
+                            <option value="Culture">Culture</option>
+                            <option value="Tech">Tech</option>
+                        </select>
+                    <br><br>
+                    <label for="BookName1">Title:</label>
+                    <!-- Click below submit1 button then pass Book's title and genre to insertBook() -->
+                    <input type="text" name="bookName1" id="bookName1" value="" data-mini="true">
+                </div>
+
+                <div class="ui-body">
+                    <fieldset class="ui-grid-a">
+                        <div class="ui-block-a">
+                            <input type="reset" id="cancel1" value="Cancel">
+                        </div>  
+                        <div class="ui-block-b">
+                            <!-- Click the button then call insertBook() -->
+                            <input type="button" id="submit1" value="Adding">
+                        </div>
+                    </fieldset>
+                </div>
+            </form>
+        </div>
+
+        <div data-role="footer">
+            <h4>Book & Book Library</h4>
+        </div>
+    </div>
+
+    <!-- Update Page -->
+    <div data-role="page" id="page2">
+        <div data-role="header" data-positon="fixed" data-theme="b">
+            <a href="#" data-icon="back" data-rel="back" data-direction="reverse">Back</a>
+            <a href="#page0" data-icon="home" data-iconpos="notext">HOME</a>
+            <h1>Book Library</h1>
+
+            <div data-role="navbar">
+                    <ul>
+                        <li><a href="#page1">Adding</a></li>
+                        <li><a href="#page2">Update</a></li>
+                        <li><a href="#page3">Delete</a></li>
+                        <li><a href="#page4">Searching</a></li>
+                    </ul>
+                </div>
+        </div>
+
+        <div data-role="content">
+            <form name='form2'>
+                <h3>Update The Book Info</h3>
+                <div class="ui-body ui-body-a gap">
+                    <label for="sBookName2">Searching Title:</label>
+                    <input type="search" name="sBookName2" id="sBookName2" value="" data-mini="true">
+                    <br>
+                    <label for="bookType2" class="select">Genre:</label>
+                    <select name="bookType2" id="bookType2" data-native-menu="false" data-mini="true" data-inline="true">
+                            <option value="Undecided">Undecided</option>
+                            <option value="Economy">Economy</option>
+                            <option value="current affairs ">Current affairs</option>
+                            <option value="Culture">Culture</option>
+                            <option value="Tech">Tech</option>
+                    </select>
+                    <br><br>
+                    <label for="bookName2">Title:</label>
+                    <!-- Click below submit2 button then pass Book's title and genre to updateBook() -->
+                    <input type="text" name="bookName2" id="bookName2" value="" data-mini="true">
+                </div>
+                <div class="ui-body">
+                    <fieldset class="ui-grid-b">
+                        <div class="ui-block-a">
+                            <input type="reset" id="cancel2" value="Cancel">
+                        </div>
+                        <div class="ui-block-b">
+                            <!-- Click the button then call updateBook() -->
+                            <input type="button" id="submit2" value="Update">
+                        </div>
+                        <div class="ui-block-c">
+                            <!-- Click the button then call selectBook2() -->
+                            <input type="button" id="search2" value="Search">
+                        </div>
+                    </fieldset>
+                </div>
+            </form>
+        </div>
+
+        <div data-role="footer">
+                <h4>Book & Book Library</h4>
+        </div>
+    </div>
+
+    <!-- Delete Page -->
+    <div data-role="page" id="page3">
+        <div data-role="header" data-positon="fixed" data-theme="b">
+            <a href="#" data-icon="back" data-rel="back" data-direction="reverse">Back</a>
+            <a href="#page0" data-icon="home" data-iconpos="notext">HOME</a>
+            <h1>Book Library</h1>
+        
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#page1">Adding</a></li>
+                    <li><a href="#page2">Update</a></li>
+                    <li><a href="#page3">Delete</a></li>
+                    <li><a href="#page4">Searching</a></li>
+                </ul>
+            </div>
+        </div>
+        <div data-="content">
+            <form name="form3">
+                <h3>Deleting The Book Info</h3>
+                <div class="ui-body ui-body-a gap">
+                    <!-- Click below submit3 button then pass Book's title and genre to deleteBook() -->
+                    <label for="sBookName3">Searching Title</label>
+                    <input type="search" name="sBookName3" id="sBookName3" value="" data-mini="true">
+                    <label for="bookTypes">Genre:</label>
+                    <input type="text" name="bookType3" id="bookType3" value="" data-mini="true">
+                    <label for="bookName3">Title</label>
+                    <input type="text" name="bookName3" id="bookName3" value="" data-mini="true">
+                </div>
+                <div class="ui-body">
+                    <fieldset class="ui-grid-b">
+                        <div class="ui-block-a">
+                            <input type="reset" id="cancel3" value="Cancel">
+                        </div>
+                        <div class="ui-block-b">
+                            <!-- Click the button then call deleteBook() -->
+                            <input type="button" id="submit3" value="Delete">
+                        </div>
+                        <div class="ui-block-c">
+                            <!-- Click the button then call selectBook3() -->
+                            <input type="button" id="search3" value="Search">
+                        </div>  
+                    </fieldset>
+                </div>
+            </form> 
+        </div>
+
+        <div data-role="footer">
+                <h4>Book & Book Library</h4>
+        </div>
+    </div>
+
+    <!-- Searching All books -->
+    <div data-role="page" id="page4">
+        <div data-role="header" data-theme="b">
+            <a href="#" data-icon="back" data-rel="back" data-direction="reverse">Back</a>
+            <a href="#page0" data-icon="home" data-iconpos="notext">HOME</a>
+            <h1>Book Library</h1>
+    
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#page1">Adding</a></li>
+                    <li><a href="#page2">Update</a></li>
+                    <li><a href="#page3">Delete</a></li>
+                    <li><a href="#page4">Searching</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div data-role="content">
+            <h3>Searching All books</h3>
+            <div>
+                <fieldset data-role="controlgroup" data-type="horizontal" style="text-align: right">
+                    <!-- If I click these buttons then call SearchAllBook() -->
+                    <input type="button" id="first" value="|<">
+                    <input type="button" id="prev" value="<">
+                    <input type="button" id="next" value=">">
+                    <input type="button" id="last" value=">|">
+                </fieldset>
+                <label for="sBookName4">Searching Title:</label>
+                <input type="search" name="sBookName4" id="sBookName4" value="" data-mini="true">
+
+                <!-- Return book's genre from searchAllBook() -->
+                <label for="bookType4">Genre:</label>
+                <input type="text" name="bookType4" id="bookType4" value="" data-mini="true">
+
+                <!-- Return book's title from searchAllBook() -->
+                <label for="bookName4">Title:</label>
+                <input type="text" name="bookName4" id="bookName4" value="" data-mini="true">
+            </div>
+            
+            <div class="ui-body">
+                <fieldset class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <input type="reset" id="cancel4" value="Cancel">
+                    </div>
+                    <div class="ui-block-b">
+                        <!-- Click the button then call selectBook4() -->
+                        <input type="button" id="search4" value="Search">
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        
+        <div data-role="footer">
+            <h4>Book & Book Library</h4>
+        </div>
+    </div>
+</body>
+</html>
